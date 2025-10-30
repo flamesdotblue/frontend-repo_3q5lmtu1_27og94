@@ -1,28 +1,37 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import DeveloperMode from './components/DeveloperMode';
+import UserMode from './components/UserMode';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [page, setPage] = useState('home');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
-        </div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-b from-white via-sky-50 to-teal-50 text-slate-800">
+      <Header onNavigate={setPage} current={page} />
+
+      {page === 'home' && (
+        <Hero onSelect={(mode) => setPage(mode)} />
+      )}
+
+      {page === 'developer' && (
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <DeveloperMode />
+        </main>
+      )}
+
+      {page === 'user' && (
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <UserMode />
+        </main>
+      )}
+
+      <footer className="mt-12 py-8 text-center text-sm text-slate-500">
+        Built with accessibility-first design. AI For All © {new Date().getFullYear()}
+      </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
